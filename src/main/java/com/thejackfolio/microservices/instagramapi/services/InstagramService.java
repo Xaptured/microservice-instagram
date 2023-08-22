@@ -18,12 +18,13 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
 @Service
 public class InstagramService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InstagramService.class);
+    private static final Long MIN_EXPIRATION_DURATION = 2L;
 
     @Autowired
     private TheJackFolioDBClient dbClient;
@@ -47,28 +48,28 @@ public class InstagramService {
             throw new MapperException(token.getMessage());
         }
         else if(token != null && Strings.isNotBlank(token.getToken()) && Strings.isNotEmpty(token.getToken())){
-            Integer expirationDuration = calculateDaysBetweenDates(token);
+            Long expirationDuration = calculateDaysBetweenDates(token);
 
-            if(expirationDuration>2){
+            if(expirationDuration > MIN_EXPIRATION_DURATION){
+                LOGGER.info(StringConstants.GET_POSTS_MORE_THAN_TWO, expirationDuration);
                 instagramPostsResponse = getPostsUsingOldToken(token);
             }
             else {
+                LOGGER.info(StringConstants.GET_POSTS_LESS_THAN_TWO);
                 instagramPostsResponse = processTokensAndReturnPostsResponse(token.getToken(), false);
             }
         }
         return instagramPostsResponse;
     }
 
-    private Integer calculateDaysBetweenDates(Instagram_Token token){
+    public Long calculateDaysBetweenDates(Instagram_Token token){
         Date expirationDate = token.getExpirationDate();
         Date currentDate = new Date(System.currentTimeMillis());
 
         LocalDate expirationLocalDate = expirationDate.toLocalDate();
         LocalDate currentLocalDate = currentDate.toLocalDate();
 
-        Period period = Period.between(currentLocalDate, expirationLocalDate);
-
-        return period.getDays();
+        return ChronoUnit.DAYS.between(currentLocalDate, expirationLocalDate);
     }
 
     public InstagramPostsResponse getPostsUsingOldToken(Instagram_Token token) throws ResponseException, PostException {
@@ -116,8 +117,10 @@ public class InstagramService {
         }
         else if(responseBody != null && responseBody.getMessage().equals(StringConstants.REQUEST_PROCESSED)){
             if(isLongLivedToken){
+                LOGGER.info(StringConstants.GET_POSTS_LONGLIVED_TOKEN);
                 instagramPostsResponse = getPostsUsingLongLivedToken(responseBody);
             } else {
+                LOGGER.info(StringConstants.GET_POSTS_REFRESH_TOKEN);
                 instagramPostsResponse = getPostsUsingRefreshedToken(responseBody);
             }
         }

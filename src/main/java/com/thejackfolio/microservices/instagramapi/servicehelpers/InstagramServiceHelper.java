@@ -26,8 +26,8 @@ public class InstagramServiceHelper {
             response = graphClient.getPosts(PropertiesReader.getProperty(StringConstants.FIELDS),
                     token.getToken(), Integer.valueOf(PropertiesReader.getProperty(StringConstants.LIMIT)));
         } catch (Exception exception){
-            LOGGER.info("Bad request to Instagram Graph API while getting posts using old token", exception);
-            throw new ResponseException("Bad request to Instagram Graph API while getting posts using old token", exception);
+            LOGGER.info(StringConstants.BAD_REQUEST_OLD_TOKEN, exception);
+            throw new ResponseException(StringConstants.BAD_REQUEST_OLD_TOKEN, exception);
         }
         return  response;
     }
@@ -37,8 +37,8 @@ public class InstagramServiceHelper {
         try{
             response = graphClient.getRefreshAccessToken(PropertiesReader.getProperty(StringConstants.GRANT_TYPE_REFRESH_ACCESS_TOKEN), token);
         } catch (Exception exception){
-            LOGGER.info("Bad request to Instagram Graph API while refreshing access token", exception);
-            throw new ResponseException("Bad request to Instagram Graph API while refreshing access token", exception);
+            LOGGER.info(StringConstants.BAD_REQUEST_REFRESH_TOKEN, exception);
+            throw new ResponseException(StringConstants.BAD_REQUEST_REFRESH_TOKEN, exception);
         }
         return response;
     }
@@ -49,8 +49,8 @@ public class InstagramServiceHelper {
             response = graphClient.getLongLivedAccessToken(PropertiesReader.getProperty(StringConstants.GRANT_TYPE_LONG_LIVE_ACCESS_TOKEN),
                     PropertiesReader.getProperty(StringConstants.CLIENT_SECRET), access_code);
         } catch (Exception exception){
-            LOGGER.info("Bad request to Instagram Graph API while refreshing access token", exception);
-            throw new ResponseException("Bad request to Instagram Graph API while refreshing access token", exception);
+            LOGGER.info(StringConstants.BAD_REQUEST_LONGLIVED_TOKEN, exception);
+            throw new ResponseException(StringConstants.BAD_REQUEST_LONGLIVED_TOKEN, exception);
         }
         return response;
     }
