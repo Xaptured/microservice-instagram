@@ -21,7 +21,7 @@ public class IncomingValidation {
             for(Post post : response.getData()){
                 if(Strings.isEmpty(post.getMedia_url()) || Strings.isBlank(post.getMedia_url())){
                     LOGGER.info("Post URL is null in response item:{}", post);
-                    throw new PostException("Post URL is null in response");
+                    throw new PostException(StringConstants.POST_URL_NULL);
                 }
             }
         }
