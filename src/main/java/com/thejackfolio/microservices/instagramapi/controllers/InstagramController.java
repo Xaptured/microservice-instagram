@@ -5,6 +5,8 @@ import com.thejackfolio.microservices.instagramapi.models.InstagramPostsResponse
 import com.thejackfolio.microservices.instagramapi.models.InstagramPostsResponseWrapper;
 import com.thejackfolio.microservices.instagramapi.services.InstagramService;
 import com.thejackfolio.microservices.instagramapi.utilities.StringConstants;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Instagram", description = "Get Instagram Posts")
 @RestController
 @RequestMapping("/instagram")
 public class InstagramController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(InstagramController.class);
-
     @Autowired
     private InstagramService service;
 
+    @Operation(
+            summary = "Get Posts using old token",
+            description = "Gets top 5 YouTube Video according to date from my channel"
+    )
     @GetMapping("/get-posts")
     public ResponseEntity<InstagramPostsResponseWrapper> getInstagramPostsUsingOldAuthCode(){
         InstagramPostsResponseWrapper wrapper = null;
@@ -44,6 +49,10 @@ public class InstagramController {
         return ResponseEntity.status(HttpStatus.OK).body(wrapper);
     }
 
+    @Operation(
+            summary = "Get Posts using new token",
+            description = "Gets top 5 YouTube Video according to date from my channel"
+    )
     @GetMapping("/get-posts-new-token")
     public ResponseEntity<InstagramPostsResponseWrapper> getPostsUsingNewToken(@RequestParam(value = "access_token")String token){
         InstagramPostsResponseWrapper wrapper = null;
