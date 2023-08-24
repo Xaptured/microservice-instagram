@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "get-instagram-posts-using-graph", url = "https://graph.instagram.com")
+@FeignClient(name = "GRAPH-SERVICE", url = "https://graph.instagram.com")
 public interface InstagramGraphClient {
 
     @GetMapping("/me/media")
