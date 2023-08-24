@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "token-db-client", url = "http://localhost:8080/instagram-token")
+@FeignClient(name = "DATABASE-SERVICE")
 public interface TheJackFolioDBClient {
 
-    @PostMapping("/save-token")
+    @PostMapping("/instagram-token/save-token")
     public ResponseEntity<Instagram_Token> saveInstagramToken(@RequestBody Instagram_Token instagramToken);
 
-    @GetMapping("/get-token")
+    @GetMapping("/instagram-token/get-token")
     public ResponseEntity<Instagram_Token> getInstagramToken();
 }
