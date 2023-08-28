@@ -27,6 +27,8 @@ public class StringConstants {
     public static final String GRANT_TYPE_REFRESH_ACCESS_TOKEN = "GRANT_TYPE_REFRESH_ACCESS_TOKEN";
     public static final String CLIENT_SECRET = "CLIENT_SECRET";
     public static final String GRANT_TYPE_LONG_LIVE_ACCESS_TOKEN = "GRANT_TYPE_LONG_LIVE_ACCESS_TOKEN";
+    public static final String FALLBACK_MESSAGE = "Something went wrong. Please try again later";
+    public static final String RETRY_MESSAGE = "Something went wrong. Doing retry...";
 
 
     private StringConstants(){}
