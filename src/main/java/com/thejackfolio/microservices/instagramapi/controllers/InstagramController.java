@@ -32,7 +32,6 @@ public class InstagramController {
     )
     @GetMapping("/get-posts")
     @Retry(name = "get-posts-retry", fallbackMethod = "getPostsRetry")
-    //@CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<InstagramPostsResponseWrapper> getInstagramPostsUsingOldAuthCode(){
         InstagramPostsResponseWrapper wrapper = null;
         try{
