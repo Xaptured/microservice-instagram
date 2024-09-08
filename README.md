@@ -1,3 +1,8 @@
+[![Build and Test Java Spring Boot Application](https://github.com/Xaptured/microservice-instagram/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/Xaptured/microservice-instagram/actions/workflows/build-and-test.yml)
+
+[![Dependabot Updates](https://github.com/Xaptured/microservice-instagram/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/Xaptured/microservice-instagram/actions/workflows/dependabot/dependabot-updates)
+
+
 # microservice-instagram
 
 This microservice is used as a layer above the Instagram Basic Display APIs which can do operations related to media data, posts information etc. Along with this there is a scheduler which will run everyday at 1:15 PM to check whether the long lived access token is going to expire or not in the coming 2 days. 
